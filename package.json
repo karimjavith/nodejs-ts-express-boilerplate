@@ -9,6 +9,7 @@
     "lint": "eslint . --ext .ts,.tsx --fix",
     "prettier": "prettier --write **/*.ts",
     "test": "jest -i --colors --verbose --detectOpenHandles --no-cache --watchAll",
+    "test:prod": "jest -i --colors --verbose --no-cache --detectOpenHandles",
     "build": "npm run clean && tsc -p tsconfig.build.json && npm run lint",
     "build:watch": "tsc -w -p tsconfig.build.json",
     "dev": "npm run build && nodemon --config restart.json",

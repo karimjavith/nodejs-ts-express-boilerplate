@@ -7,7 +7,6 @@ moduleAlias.addAliases({
 
 import { createServer } from '@server/app';
 import { AddressInfo } from 'net';
-import http from 'http';
 import { LoggerWrapper } from '@config/logger';
 import { config } from '@config/index';
 
@@ -16,7 +15,7 @@ const host = config.HOST || 'localhost';
 const port = config.PORT || '3000';
 export async function startServer() {
   const app = createServer();
-  const server = http.createServer(app).listen({ host, port }, () => {
+  const server = app.listen({ host, port }, () => {
     const addressInfo = server.address() as AddressInfo;
     logger.info(
       `Server ready at http://${addressInfo.address}:${addressInfo.port}`,
@@ -52,6 +51,6 @@ export async function startServer() {
   });
 }
 
-if (process.env.NODE_ENV !== 'test') {
+if (config.ENV !== 'test') {
   startServer();
 }

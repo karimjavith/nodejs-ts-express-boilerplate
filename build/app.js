@@ -28,10 +28,6 @@ const createServer = () => {
     app.options('*', (0, cors_1.default)());
     // v1 api routes
     app.use('/v1', v1_1.routes);
-    // default routes
-    app.use(function (_req, res) {
-        res.redirect('/v1/ping');
-    });
     // send back a 404 error for any unknown api request
     app.use((_req, _res, next) => {
         next(new ApiError_1.ApiError(http_status_1.default.NOT_FOUND, 'Not found'));
