@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.startServer = void 0;
 const tslib_1 = require("tslib");
 const moduleAlias = tslib_1.__importStar(require("module-alias"));
 const sourcePath = 'src';
@@ -8,7 +9,7 @@ moduleAlias.addAliases({
     '@config': `${sourcePath}/config`,
 });
 const app_1 = require("@server/app");
-const http_1 = tslib_1.__importDefault(require("http"));
+// import http from 'http';
 const logger_1 = require("@config/logger");
 const index_1 = require("@config/index");
 const logger = (0, logger_1.LoggerWrapper)();
@@ -17,7 +18,7 @@ const port = index_1.config.PORT || '3000';
 function startServer() {
     return tslib_1.__awaiter(this, void 0, void 0, function* () {
         const app = (0, app_1.createServer)();
-        const server = http_1.default.createServer(app).listen({ host, port }, () => {
+        const server = app.listen({ host, port }, () => {
             const addressInfo = server.address();
             logger.info(`Server ready at http://${addressInfo.address}:${addressInfo.port}`);
         });
@@ -42,14 +43,15 @@ function startServer() {
         signalTraps.forEach((type) => {
             process.once(type, () => tslib_1.__awaiter(this, void 0, void 0, function* () {
                 logger.info(`process.once ${type}`);
-                if (server) {
-                    server.close(() => {
-                        logger.debug('HTTP server closed');
-                    });
-                }
+                server.close(() => {
+                    logger.debug('HTTP server closed');
+                });
             }));
         });
     });
 }
-startServer();
+exports.startServer = startServer;
+if (process.env.NODE_ENV !== 'test') {
+    startServer();
+}
 //# sourceMappingURL=index.js.map
