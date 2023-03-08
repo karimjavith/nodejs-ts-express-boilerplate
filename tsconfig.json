@@ -25,7 +25,9 @@
       "@tests/*": ["__tests__/*"],
       "@config/*": ["src/config/*"],
       "@controller/*": ["src/controller/*"],
-      "@middleware/*": ["src/middleware/*"]
+      "@middleware/*": ["src/middleware/*"],
+      "@utils/*": ["src/utils/*"],
+      "@routes/*": ["src/routes/*"]
     }
   },
   "include": ["src/**/*", "__tests__/**/*"],

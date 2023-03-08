@@ -2,7 +2,11 @@ import path from 'path';
 const rootDirector = path.resolve(__dirname);
 
 export default {
-  clearMocks: true,
+  testEnvironment: 'node',
+  testEnvironmentOptions: {
+    NODE_ENV: 'test',
+  },
+  restoreMocks: true,
   collectCoverage: true,
   coverageDirectory: 'coverage',
   coverageProvider: 'v8',
@@ -14,6 +18,12 @@ export default {
       statements: 80,
     },
   },
+  coveragePathIgnorePatterns: [
+    'node_modules',
+    'src/config',
+    'src/app.ts',
+    'tests',
+  ],
   globals: {
     'ts-jest': {
       tsconfig: path.resolve(__dirname, 'tsconfig.json'),
@@ -27,6 +37,8 @@ export default {
     '@tests(.*)$': `${rootDirector}/__tests__$1`,
     '@controller(.*)$': `${rootDirector}/src/controller$1`,
     '@middleware(.*)$': `${rootDirector}/src/middleware$1`,
+    '@utils(.*)$': `${rootDirector}/src/utils$1`,
+    '@routes(.*)$': `${rootDirector}/src/routes$1`,
   },
   reporters: [
     'default',
@@ -34,7 +46,7 @@ export default {
       path.resolve(__dirname, 'node_modules', 'jest-html-reporter'),
       {
         pageTitle: 'Demo test Report',
-        outputPath: 'test-report.html',
+        outputPath: './coverage/test-report.html',
       },
     ],
   ],
